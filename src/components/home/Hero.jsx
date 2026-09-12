@@ -88,26 +88,26 @@ function Hero({ cms, heroBanners = [], heroBenefits: initialHeroBenefits = [], o
   const slides = filteredSlides.length > 0
     ? filteredSlides
     : (heroCms.title ? [{
-      id: 'default-hero-slide',
-      title: heroCms.title,
-      subtitle: heroCms.subtitle || '',
-      badge: heroCms.badge || '100% Organik & Segar',
-      description: heroCms.description || 'Dipanen pagi hari, dikemas higienis, dan dikirim langsung ke rumah Anda di hari yang sama.',
-      buttonText: heroCms.ctaText || heroCms.buttonText || 'Belanja Sekarang',
-      buttonLink: heroCms.ctaLink || heroCms.buttonLink || '/produk',
-      image: heroCms.image || heroCms.desktopImage || '',
-      desktopImage: heroCms.desktopImage || heroCms.image || '',
-      mobileImage: heroCms.mobileImage || heroCms.image || '',
-      active: true,
-      background: heroCms.background || '#ECF6ED',
-      overlay: Number(heroCms.overlay) || 0,
-      sortOrder: 0
-    }] : []);
+        id: 'default-hero-slide',
+        title: heroCms.title,
+        subtitle: heroCms.subtitle || '',
+        badge: heroCms.badge || '100% Organik & Segar',
+        description: heroCms.description || 'Dipanen pagi hari, dikemas higienis, dan dikirim langsung ke rumah Anda di hari yang sama.',
+        buttonText: heroCms.ctaText || heroCms.buttonText || 'Belanja Sekarang',
+        buttonLink: heroCms.ctaLink || heroCms.buttonLink || '/produk',
+        image: heroCms.image || heroCms.desktopImage || '',
+        desktopImage: heroCms.desktopImage || heroCms.image || '',
+        mobileImage: heroCms.mobileImage || heroCms.image || '',
+        active: true,
+        background: heroCms.background || '#ECF6ED',
+        overlay: Number(heroCms.overlay) || 0,
+        sortOrder: 0
+      }] : []);
 
   const heroBenefits = clientBenefits.length > 0 ? clientBenefits : (Array.isArray(heroCms.benefits) ? heroCms.benefits : []);
 
   const defaultIdx = typeof heroCms.defaultFirstSlideIdx === 'number' && heroCms.defaultFirstSlideIdx < slides.length
-    ? heroCms.defaultFirstSlideIdx
+    ? heroCms.defaultFirstSlideIdx 
     : 0;
 
   const [activeIndex, setActiveIndex] = useState(defaultIdx);
@@ -164,7 +164,7 @@ function Hero({ cms, heroBanners = [], heroBenefits: initialHeroBenefits = [], o
     if (!(heroCms.swipeEnabled ?? true)) return;
     const swipeSensitivity = parseInt(heroCms.swipeSensitivity ?? '50', 10);
     const distance = touchStartX.current - touchEndX.current;
-
+    
     if (distance > swipeSensitivity) {
       setActiveIndex((prev) => (prev + 1) % totalSlides);
       if (intervalRef.current) clearInterval(intervalRef.current);
@@ -224,23 +224,8 @@ function Hero({ cms, heroBanners = [], heroBenefits: initialHeroBenefits = [], o
   const explicitDesk = activeSlide.desktopImage || activeSlide.image || '';
   const explicitMob = activeSlide.mobileImage || '';
 
-  const deskImg = explicitDesk
-    ? (
-      explicitDesk.startsWith('http://') ||
-        explicitDesk.startsWith('https://')
-        ? explicitDesk
-        : buildStorageUrl(explicitDesk)
-    )
-    : '';
-
-  const mobileImg = explicitMob
-    ? (
-      explicitMob.startsWith('http://') ||
-        explicitMob.startsWith('https://')
-        ? explicitMob
-        : buildStorageUrl(explicitMob)
-    )
-    : '';
+  const deskImg = explicitDesk ? (explicitDesk.startsWith('http') || explicitDesk.startsWith('/') ? explicitDesk : `/${explicitDesk}`) : '';
+  const mobileImg = explicitMob ? (explicitMob.startsWith('http') || explicitMob.startsWith('/') ? explicitMob : `/${explicitMob}`) : '';
 
   const slideImg = deskImg || mobileImg;
   const slideMobileImg = mobileImg || deskImg;
@@ -279,19 +264,19 @@ function Hero({ cms, heroBanners = [], heroBenefits: initialHeroBenefits = [], o
       `}</style>
 
       <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
-        <div
-          className="absolute inset-0 pointer-events-none z-0 opacity-[0.01]"
+        <div 
+          className="absolute inset-0 pointer-events-none z-0 opacity-[0.01]" 
           style={{
             backgroundImage: 'radial-gradient(rgba(0, 0, 0, 0.08) 1px, transparent 1px)',
             backgroundSize: '24px 24px',
-          }}
+          }} 
         />
-        <div
-          className="absolute -top-20 -left-20 w-[450px] h-[450px] rounded-full blur-[130px]"
+        <div 
+          className="absolute -top-20 -left-20 w-[450px] h-[450px] rounded-full blur-[130px]" 
           style={{ backgroundColor: '#f3f4f6', opacity: 0.25 }}
         />
-        <div
-          className="absolute -bottom-20 -right-20 w-[500px] h-[500px] rounded-full blur-[140px]"
+        <div 
+          className="absolute -bottom-20 -right-20 w-[500px] h-[500px] rounded-full blur-[140px]" 
           style={{ backgroundColor: '#e5e7eb', opacity: 0.2 }}
         />
       </div>
@@ -339,7 +324,7 @@ function Hero({ cms, heroBanners = [], heroBenefits: initialHeroBenefits = [], o
                         decoding="async"
                         onError={() => setImageError(true)}
                         className="w-full h-full object-cover hero-slide-img select-none pointer-events-none transition-all duration-700 ease-out"
-                        style={{
+                        style={{ 
                           objectPosition: activeSlide.desktopCrop || activeSlide.cropPosition || 'center center',
                           transform: `scale(${parseFloat(activeSlide.desktopZoom || activeSlide.cropZoom || '100') / 100})`,
                           transformOrigin: activeSlide.desktopCrop || activeSlide.cropPosition || 'center center',
@@ -350,12 +335,12 @@ function Hero({ cms, heroBanners = [], heroBenefits: initialHeroBenefits = [], o
                     </picture>
                   </div>
                 ) : (
-                  <div
-                    className="w-full h-full flex items-center justify-center transition-colors duration-500"
+                  <div 
+                    className="w-full h-full flex items-center justify-center transition-colors duration-500" 
                     style={{ backgroundColor: activeSlide.background || '#ECF6ED' }}
                   />
                 )}
-                <div
+                <div 
                   className="absolute inset-0 bg-black pointer-events-none transition-all duration-300"
                   style={{ opacity: overlayOpacityVal }}
                 />
@@ -403,8 +388,9 @@ function Hero({ cms, heroBanners = [], heroBenefits: initialHeroBenefits = [], o
                         <button
                           key={slide.id || idx}
                           onClick={() => goToSlide(idx)}
-                          className={`group flex flex-col items-start gap-1 transition-all duration-300 cursor-pointer ${isActive ? 'opacity-100' : 'opacity-40 hover:opacity-75'
-                            }`}
+                          className={`group flex flex-col items-start gap-1 transition-all duration-300 cursor-pointer ${
+                            isActive ? 'opacity-100' : 'opacity-40 hover:opacity-75'
+                          }`}
                         >
                           <span className="text-black tracking-wide">{slide.badge || `Slide ${idx + 1}`}</span>
                           <div className="w-full min-w-[40px] h-[2px] bg-black/30 rounded-full overflow-hidden relative">
