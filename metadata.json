@@ -1,0 +1,8 @@
+{
+  "name": "Tanico",
+  "description": "Tanico Platform - Pasar Pertanian & Sistem Manajemen Digital",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
